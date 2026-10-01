@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff8f4">
+<title>Digital Book Studio</title>
+<style>
+:root{--bg:#fff8f4;--card:#fffdfb;--text:#342c36;--muted:#8d828a;--p:#7c5cfc;--line:#eee3df;--shadow:0 12px 30px #4a30411a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:82px}
+header{padding:20px 18px 8px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:900;letter-spacing:.08em;font-size:15px}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.14em;margin-top:3px}
+.iconbtn,.back{background:#fff;border-radius:14px;box-shadow:var(--shadow)}.iconbtn{width:42px;height:42px;font-size:19px}.screen{display:none;padding:12px 18px}.screen.active{display:block}
+.hero{padding:18px 0}.hero h1{font-size:31px;line-height:1.08;margin:0 0 8px}.hero p{color:var(--muted);line-height:1.5;margin:0}.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.primary,.secondary{padding:14px;border-radius:16px;font-weight:800}.primary{background:var(--p);color:#fff}.secondary{background:#fff;box-shadow:var(--shadow)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section-title h2{font-size:18px;margin:0}.section-title span{font-size:12px;color:var(--muted)}
+.templates{display:grid;grid-template-columns:1fr 1fr;gap:12px}.template-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--shadow);text-align:left}
+.template-preview{aspect-ratio:3/4;border-radius:14px;overflow:hidden;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}.fake-title{font-weight:900;font-size:18px;line-height:1.05}.fake-author{font-size:10px;margin-top:7px;opacity:.75}
+.tpl-classic{background:linear-gradient(145deg,#f5e4ca,#fffaf2)}.tpl-scrap{background:linear-gradient(145deg,#f4b6c9,#ffe8a8)}.tpl-love{background:linear-gradient(145deg,#ff7898,#ffd2dc);color:#fff}.tpl-travel{background:linear-gradient(145deg,#74c9e8,#d9f6ff)}.tpl-photo{background:linear-gradient(145deg,#8ed8c1,#eafff7)}
+.template-name{font-weight:800;font-size:13px;margin-top:9px}.template-card small{color:var(--muted)}
+.bottomnav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fffdfbf5;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom))}
+.navbtn{background:none;color:var(--muted);font-size:10px;font-weight:700}.navbtn b{display:block;font-size:20px}.navbtn.active{color:var(--p)}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}label{display:block;font-size:12px;font-weight:800;margin-bottom:7px}
+input,textarea,select{width:100%;border:1px solid var(--line);background:#fffaf8;border-radius:13px;padding:12px;outline:none}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.library-list{display:grid;gap:12px}.book-item{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow)}.cover-thumb{width:78px;aspect-ratio:3/4;border-radius:12px;overflow:hidden;flex:none}.book-info{min-width:0;flex:1}.book-info h3{margin:3px 0 4px;font-size:15px}.book-info p{margin:0;color:var(--muted);font-size:11px}.book-actions{display:flex;gap:7px;margin-top:10px}.mini{padding:8px 10px;border-radius:10px;background:#f6f0ff;font-size:11px;font-weight:800}.danger{background:#fff0f2;color:#d34d69}
+.editor-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}.back{width:40px;height:40px}.editor-title{font-weight:900}.book-stage{background:#eadfdb;border-radius:24px;padding:18px;display:flex;justify-content:center;min-height:410px;align-items:center}.cover{position:relative;width:min(100%,285px);aspect-ratio:3/4;border-radius:7px;overflow:hidden;box-shadow:0 18px 38px #1e141433;background:#f3e7d8}.cover-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.cover-overlay{position:absolute;inset:0;background:linear-gradient(#00000012,#0000001f 45%,#0000007a)}.cover-content{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column}.cover-title{font-family:Georgia,serif;font-size:28px;line-height:1.02;font-weight:900;white-space:pre-wrap;word-break:break-word}.cover-subtitle{font-size:13px;margin-top:8px}.cover-author{font-size:11px;margin-top:16px;letter-spacing:.08em;text-transform:uppercase}
+.editor-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.tool{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 5px;font-size:11px;font-weight:800}.preview-only{font-size:11px;color:var(--muted);text-align:center;margin:10px 0}
+.modal{position:fixed;inset:0;background:#261b2373;display:none;align-items:flex-end;z-index:50}.modal.show{display:flex}.sheet{width:min(520px,100%);margin:auto 0 0;background:#fffdfb;border-radius:24px 24px 0 0;padding:20px;max-height:88vh;overflow:auto}.close{float:right;background:#f4eeee;border-radius:10px;width:36px;height:36px}
+.empty{text-align:center;padding:35px 10px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">DIGITAL BOOK STUDIO<small>CREATE • DESIGN • REMEMBER</small></div><button class="iconbtn" onclick="show('settings')">⚙️</button></header>
+
+<section id="home" class="screen active">
+<div class="hero"><h1>Ubah cerita<br>menjadi buku.</h1><p>Buat buku digital dari foto, cerita, dan ide kamu. Pilih template lalu edit sampai sesuai.</p><div class="hero-actions"><button class="primary" onclick="show('create')">＋ Buku Baru</button><button class="secondary" onclick="library()">▣ Perpustakaan</button></div></div>
+<div class="section-title"><h2>Template Buku</h2><span>Editable</span></div><div id="homeTemplates" class="templates"></div>
+</section>
+
+<section id="create" class="screen">
+<div class="section-title"><h2>Buat Buku Baru</h2><button class="mini" onclick="show('home')">Kembali</button></div>
+<div class="form-card"><label>Judul buku</label><input id="newTitle" placeholder="Contoh: Our Story"><div class="grid2" style="margin-top:12px"><div><label>Ukuran</label><select id="newSize"><option>A5 Portrait</option><option>A4 Portrait</option><option>Square 1:1</option><option>9:16 Portrait</option></select></div><div><label>Tema</label><select id="newTheme"><option>Auto Theme</option><option>Vintage</option><option>Romantic</option><option>Nature</option><option>Dark</option><option>Cute</option><option>Elegant</option><option>Modern</option></select></div></div></div>
+<div class="section-title"><h2>Pilih Template</h2></div><div id="createTemplates" class="templates"></div>
+</section>
+
+<section id="library" class="screen"><div class="section-title"><h2>Perpustakaan</h2><button class="primary" style="padding:9px 12px" onclick="show('create')">＋ Baru</button></div><div class="form-card"><input id="search" placeholder="Cari buku..." oninput="renderLibrary()"></div><div id="libraryList" class="library-list"></div></section>
+
+<section id="editor" class="screen">
+<div class="editor-top"><button class="back" onclick="library()">‹</button><div><div class="editor-title" id="editorTitle">Editor</div><small id="editorMeta"></small></div></div>
+<div id="bookStage" class="book-stage"></div><div class="preview-only">Cover ini adalah render yang disimpan ke Perpustakaan.</div>
+<div class="editor-tools"><button class="tool" onclick="editText()">Aa<br>Teks</button><button class="tool" onclick="editPhoto()">▧<br>Foto</button><button class="tool" onclick="changeStyle()">◐<br>Gaya</button><button class="tool" onclick="saveBook()">✓<br>Simpan</button></div>
+<div class="form-card" style="margin-top:12px"><label>Posisi teks</label><select id="position" onchange="positionText(this.value)"><option value="bottom">Bawah</option><option value="center">Tengah</option><option value="top">Atas</option></select></div>
+</section>
+
+<section id="settings" class="screen"><div class="section-title"><h2>Pengaturan</h2><button class="mini" onclick="show('home')">Kembali</button></div><div class="form-card"><h3 style="margin-top:0">Digital Book Studio</h3><p style="color:var(--muted);font-size:13px;line-height:1.5">Versi mandiri tanpa CDN agar lebih aman untuk GitHub Pages.</p></div></section>
+
+<nav class="bottomnav"><button class="navbtn active" data-s="home" onclick="show('home')"><b>⌂</b>Beranda</button><button class="navbtn" data-s="library" onclick="library()"><b>▣</b>Perpustakaan</button><button class="navbtn" data-s="create" onclick="show('create')"><b>＋</b>Buat</button><button class="navbtn" data-s="settings" onclick="show('settings')"><b>⚙</b>Profil</button></nav>
+</div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div id="sheet" class="sheet"></div></div>
+
+<script>
+'use strict';
+const T=[
+{id:'classic',name:'Classic Book',desc:'Hangat & elegan',cls:'tpl-classic',title:'A Story to Remember',author:'Your Name'},
+{id:'scrap',name:'Scrapbook',desc:'Fun & playful',cls:'tpl-scrap',title:'Little Moments',author:'Your Name'},
+{id:'love',name:'Love Story',desc:'Romantis',cls:'tpl-love',title:'Our Story',author:'Forever'},
+{id:'travel',name:'Travel Journal',desc:'Segar & ringan',cls:'tpl-travel',title:'My Journey',author:'Travel Journal'},
+{id:'photo',name:'Photo Album',desc:'Minimal & clean',cls:'tpl-photo',title:'Beautiful Days',author:'Memories'}];
+let books=(()=>{try{return JSON.parse(localStorage.getItem('dbs_books_v11')||'[]')}catch(e){return[]}})(),current=null;
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const tpl=id=>T.find(x=>x.id===id)||T[0];
+const accent=id=>({classic:'#8f6b45',scrap:'#ff7898',love:'#d94f72',travel:'#3da8c9',photo:'#4a9b83'})[id]||'#7c5cfc';
+function save(){localStorage.setItem('dbs_books_v11',JSON.stringify(books))}
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.s===id));scrollTo(0,0)}
+function card(t,fn){return `<button class="template-card" onclick="${fn}"><div class="template-preview ${t.cls}"><div class="fake-title">${esc(t.title)}</div><div class="fake-author">${esc(t.author)}</div></div><div class="template-name">${esc(t.name)}</div><small>${esc(t.desc)}</small></button>`}
+function renderTemplates(){homeTemplates.innerHTML=T.map(t=>card(t,`quick('${t.id}')`)).join('');createTemplates.innerHTML=T.map(t=>card(t,`createBook('${t.id}')`)).join('')}
+function quick(id){show('create');setTimeout(()=>createBook(id),30)}
+function createBook(id){let t=tpl(id),title=(newTitle.value||'').trim()||t.title;let b={id:'b'+Date.now(),title,size:newSize.value,theme:newTheme.value,template:id,cover:{title,subtitle:'',author:t.author,photo:'',position:'bottom'},updatedAt:Date.now()};books.unshift(b);save();openEditor(b.id)}
+function openEditor(id){current=id;let b=books.find(x=>x.id===id);if(!b)return;editorTitle.textContent=b.title;editorMeta.textContent=tpl(b.template).name+' • '+b.size;position.value=b.cover.position||'bottom';renderEditor();show('editor')}
+function bg(id){return {classic:'linear-gradient(145deg,#f4dfbd,#fff9ed)',scrap:'linear-gradient(145deg,#f4b6c9,#ffe6a1)',love:'linear-gradient(145deg,#d94f72,#ffb6c7)',travel:'linear-gradient(145deg,#74c9e8,#d9f6ff)',photo:'linear-gradient(145deg,#8ed8c1,#eafff7)'}[id]||'#eee'}
+function cover(b,thumb=false){let c=b.cover||{};return `<div class="cover" style="background:${bg(b.template)};${thumb?'box-shadow:none;width:100%;height:100%;border-radius:0':''}">${c.photo?`<img class="cover-photo" src="${c.photo}">`:''}<div class="cover-overlay"></div><div class="cover-content" style="justify-content:${c.position==='top'?'flex-start':c.position==='center'?'center':'flex-end'};${thumb?'padding:12px':''}"><div class="cover-title" style="${thumb?'font-size:16px':''}">${esc(c.title||b.title)}</div>${c.subtitle?`<div class="cover-subtitle">${esc(c.subtitle)}</div>`:''}<div class="cover-author">${esc(c.author||'')}</div></div></div>`}
+function renderEditor(){let b=books.find(x=>x.id===current);bookStage.innerHTML=cover(b);position.value=b.cover.position||'bottom'}
+function editText(){let b=books.find(x=>x.id===current);openModal(`<button class="close" onclick="closeModal()">×</button><h2>Edit Teks</h2><label>Judul</label><input id="mt" value="${esc(b.cover.title)}"><label style="margin-top:10px">Subjudul</label><input id="ms" value="${esc(b.cover.subtitle)}"><label style="margin-top:10px">Penulis</label><input id="ma" value="${esc(b.cover.author)}"><button class="primary" style="width:100%;margin-top:16px" onclick="applyText()">Simpan</button>`)}
+function applyText(){let b=books.find(x=>x.id===current);b.cover.title=mt.value||'Untitled';b.cover.subtitle=ms.value;b.cover.author=ma.value;b.title=b.cover.title;b.updatedAt=Date.now();save();closeModal();openEditor(b.id)}
+function editPhoto(){openModal(`<button class="close" onclick="closeModal()">×</button><h2>Foto Sampul</h2><p style="color:var(--muted)">Pilih foto dari perangkat.</p><input type="file" accept="image/*" onchange="photo(this)"><button class="secondary" style="width:100%;margin-top:10px" onclick="removePhoto()">Hapus Foto</button>`)}
+function photo(i){let f=i.files&&i.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{let b=books.find(x=>x.id===current);b.cover.photo=r.result;b.updatedAt=Date.now();save();closeModal();renderEditor()};r.readAsDataURL(f)}
+function removePhoto(){let b=books.find(x=>x.id===current);b.cover.photo='';save();renderEditor();closeModal()}
+function changeStyle(){let b=books.find(x=>x.id===current),i=T.findIndex(x=>x.id===b.template);b.template=T[(i+1)%T.length].id;save();renderEditor()}
+function positionText(v){let b=books.find(x=>x.id===current);b.cover.position=v;b.updatedAt=Date.now();save();renderEditor()}
+function saveBook(){save();alert('Buku berhasil disimpan ke Perpustakaan.');library()}
+function library(){renderLibrary();show('library')}
+function renderLibrary(){let q=(search?.value||'').toLowerCase();let a=books.filter(b=>(b.title+' '+b.template).toLowerCase().includes(q));libraryList.innerHTML=a.length?a.map(b=>`<div class="book-item"><div class="cover-thumb">${cover(b,true)}</div><div class="book-info"><h3>${esc(b.title)}</h3><p>${esc(tpl(b.template).name)} • ${esc(b.size)}</p><div class="book-actions"><button class="mini" onclick="openEditor('${b.id}')">Edit</button><button class="mini" onclick="readBook('${b.id}')">Baca</button><button class="mini danger" onclick="delBook('${b.id}')">Hapus</button></div></div></div>`).join(''):`<div class="empty">Belum ada buku.<br><button class="primary" style="margin-top:12px" onclick="show('create')">Buat buku pertama</button></div>`}
+function delBook(id){if(confirm('Hapus buku ini?')){books=books.filter(b=>b.id!==id);save();renderLibrary()}}
+function readBook(id){let b=books.find(x=>x.id===id);openModal(`<button class="close" onclick="closeModal()">×</button><h2>${esc(b.title)}</h2><div style="display:flex;justify-content:center;background:#eadfdb;border-radius:18px;padding:18px">${cover(b,true)}</div>`)}
+function openModal(x){sheet.innerHTML=x;modal.classList.add('show')}function closeModal(){modal.classList.remove('show')}
+renderTemplates();show('home');
+</script>
+</body>
+</html>
